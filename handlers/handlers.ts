@@ -34,7 +34,6 @@ const mutations = new GraphQLObjectType({
                 name: { type: GraphQLString },
                 email: { type: GraphQLString }
             },
-            //@ts-ignore
             async resolve(parent, { name, email }) {
                 let existingUser: Document<any, any, any>;
                 try {
