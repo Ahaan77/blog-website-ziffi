@@ -1,8 +1,8 @@
-import * as express from "express"
+import express from "express"
 import { config } from "dotenv";
-import { connectToDatabase } from "./utils/connection";
+import { connectToDatabase } from "../utils/connection"
 import { graphqlHTTP } from "express-graphql";
-import schema from "./handlers/handlers"
+import schema from "../handlers/handlers"
 
 config();
 
