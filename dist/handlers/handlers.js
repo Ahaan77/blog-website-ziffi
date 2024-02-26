@@ -23,7 +23,7 @@ const RootQuery = new graphql_1.GraphQLObjectType({
             async resolve() {
                 return await Blog_1.default.find();
             }
-        }
+        },
     }
 });
 const mutations = new graphql_1.GraphQLObjectType({
@@ -66,6 +66,22 @@ const mutations = new graphql_1.GraphQLObjectType({
                 }
                 catch (err) {
                     return new Error(err);
+                }
+            }
+        },
+        //get data with blog id
+        getBlog: {
+            type: schema_1.BlogType,
+            args: {
+                id: { type: graphql_1.GraphQLString },
+            },
+            async resolve(parent, { id }) {
+                try {
+                    const blog = await Blog_1.default.findById(id);
+                    return blog;
+                }
+                catch (err) {
+                    return new Error("Blog does not exist");
                 }
             }
         }

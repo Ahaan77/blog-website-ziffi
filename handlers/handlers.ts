@@ -3,6 +3,7 @@ import Blog from "../models/Blog";
 import User from "../models/User";
 import { BlogType, UserType } from "../schema/schema";
 import { Document } from "mongoose";
+import { resolve } from "path";
 
 const RootQuery = new GraphQLObjectType({
     name: "RootQuery",
@@ -20,7 +21,7 @@ const RootQuery = new GraphQLObjectType({
             async resolve() {
                 return await Blog.find()
             }
-        }
+        },
     }
 })
 
@@ -63,7 +64,21 @@ const mutations = new GraphQLObjectType({
                     return new Error(err)
                 }
             }
-
+        },
+        //get data with blog id
+        getBlog: {
+            type: BlogType,
+            args: {
+                id: { type: GraphQLString },
+            },
+            async resolve(parent, { id }) {
+                try {
+                    const blog = await Blog.findById(id);
+                    return blog;
+                } catch (err) {
+                    return new Error("Blog does not exist")
+                }
+            }
         }
     }
 })
